@@ -1,8 +1,12 @@
 {
   "name": "cz-gen",
   "version": "1.0.0",
+  "private": false,
   "description": "A changelog generator based on convential commit messages",
   "main": "index.js",
+  "bin": {
+    "cz-gen": "./index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

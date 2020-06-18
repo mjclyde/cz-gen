@@ -9,7 +9,7 @@ program.option('-f, --from <tag>', 'From tag');
 program.parse(process.argv);
 
 const groups = {};
-let version = '0.0.0';
+let version = 'unknown';
 const packagePath = path.join(__dirname, '/package.json');
 if (fs.existsSync(packagePath)) {
   const package = JSON.parse(fs.readFileSync(packagePath, 'utf-8'));
