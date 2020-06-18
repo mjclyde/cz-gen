@@ -1,9 +1,9 @@
-const child = require('child_process');
-const fs = require('fs');
-const path = require('path');
-const _ = require('lodash');
-const program = require('commander');
-const TYPES = require('./types');
+import * as child from 'child_process';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as _ from 'lodash';
+import * as program from 'commander';
+import { Types } from './types';
 
 program.option('-f, --from <tag>', 'From tag');
 program.parse(process.argv);
@@ -12,8 +12,8 @@ const groups = {};
 let version = 'unknown';
 const packagePath = path.join(__dirname, '/package.json');
 if (fs.existsSync(packagePath)) {
-  const package = JSON.parse(fs.readFileSync(packagePath, 'utf-8'));
-  version = package.version;
+  const packageObj = JSON.parse(fs.readFileSync(packagePath, 'utf-8'));
+  version = packageObj.version;
 }
 
 function run() {
@@ -51,10 +51,10 @@ function run() {
   });
 
   let changelog = `# Version ${version} (${
-  new Date().toISOString().split('T')[0]
-})\n\n`;
+    new Date().toISOString().split('T')[0]
+    })\n\n`;
 
-  _.forEach(TYPES, (type) => {
+  _.forEach(Types, (type) => {
     if (groups[type.id]) {
       changelog += `## ${type.name}\n\n`;
       const contexts = Object.keys(groups[type.id]).sort().filter((context) => context !== 'null');

@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "noImplicitAny": false,
+    "types": ["node", "mocha"],
+    "skipLibCheck": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "experimentalDecorators": true,
+    "sourceMap": true
+  },
+  "include": [
+    "./src/**/*.ts"
+  ],
+}
