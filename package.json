@@ -1,8 +1,8 @@
 {
   "name": "cz-gen",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "private": false,
-  "description": "A changelog generator based on convential commit messages",
+  "description": "A changelog generator based on conventional commit messages",
   "main": "./cli.js",
   "bin": {
     "cz-gen": "./cli.js"

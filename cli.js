@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-const app = require('./build/app.bundle');
+const app = require('./dist/app.bundle');
