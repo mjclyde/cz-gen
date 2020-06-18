@@ -25,12 +25,17 @@ if (fs.existsSync(packagePath)) {
 }
 
 function run() {
-  if (!program.from) {
-    console.log('Error! please provide a valid --from option');
+  let from = program.form;
+  if (!from) {
+    from = _.trim(child.execSync('git describe --abbrev=0'));
+    console.log(`Found latest release at: ${from}`);
+  }
+  if (from === `v${version}`) {
+    console.log(`Current version v${version} and latest tag match. No changelog will be created`);
     return;
   }
 
-  const output = child.execSync(`git log ${program.from}..HEAD --format="%H [%cn] %s"`).toString('utf-8');
+  const output = child.execSync(`git log ${from}..HEAD --format="%H [%cn] %s"`).toString('utf-8');
   const commits: ICommit[] = output.split('\n')
     .map((raw) => {
       const commit: ICommit = { author: '', sha: '', type: '', message: '', context: '' };
@@ -75,6 +80,7 @@ function run() {
     fs.mkdirSync(changeLogsPath);
   }
   fs.writeFileSync(`${changeLogsPath}/${version}.md`, changelog);
+  console.log(`Finished Creating Changelog ${version}`);
 }
 
 function formatCommit(commit: ICommit) {
@@ -83,4 +89,3 @@ function formatCommit(commit: ICommit) {
 
 // Run this thang!
 run();
-console.log(`Finished Creating Changelog ${version}`);
