@@ -1,0 +1,43 @@
+{
+  "name": "cz-gen",
+  "version": "1.0.0",
+  "description": "A changelog generator based on convential commit messages",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mjclyde/cz-gen.git"
+  },
+  "keywords": [
+    "changelog",
+    "generator"
+  ],
+  "author": "Matt Clyde",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mjclyde/cz-gen/issues"
+  },
+  "homepage": "https://github.com/mjclyde/cz-gen#readme",
+  "dependencies": {
+    "commander": "^5.1.0",
+    "lodash": "^4.17.15"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "cz-conventional-changelog": "^3.2.0",
+    "husky": "^4.2.5"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
+}
