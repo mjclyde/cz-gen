@@ -1,11 +1,11 @@
 {
   "name": "cz-gen",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": false,
   "description": "A changelog generator based on convential commit messages",
-  "main": "./dist/app.bundle.js",
+  "main": "./cli.js",
   "bin": {
-    "cz-gen": "./dist/app.bundle.js"
+    "cz-gen": "./cli.js"
   },
   "preferGlobal": true,
   "scripts": {
