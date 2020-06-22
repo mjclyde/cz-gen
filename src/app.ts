@@ -25,7 +25,7 @@ if (fs.existsSync(packagePath)) {
 }
 
 function run() {
-  let from = program.form;
+  let from = program.from;
   if (!from) {
     from = _.trim(child.execSync('git describe --abbrev=0'));
     console.log(`Found latest release at: ${from}`);
