@@ -5,6 +5,8 @@ import * as program from 'commander';
 import { CommitTypes, ICommitType } from './types';
 
 program.option('-f, --from <tag>', 'From tag');
+program.option('-t, --to <tag>', 'To tag');
+program.option('-o, --out <fileName>', 'Filename to output changelog to');
 program.parse(process.argv);
 
 const packagePath = './package.json';
@@ -19,13 +21,16 @@ interface ICommit {
 
 const groups: { [type: string]: { [context: string]: ICommit[] } } = {};
 let version = 'unknown';
-if (fs.existsSync(packagePath)) {
+if (program.to) {
+  version = program.to;
+} else if (fs.existsSync(packagePath)) {
   const packageObj = JSON.parse(fs.readFileSync(packagePath, 'utf-8'));
   version = packageObj.version;
 }
 
 function run() {
   let from = program.from;
+  const to = program.to || 'HEAD';
   if (!from) {
     from = _.trim(child.execSync('git describe --abbrev=0'));
     console.log(`Found latest release at: ${from}`);
@@ -35,7 +40,7 @@ function run() {
     return;
   }
 
-  const output = child.execSync(`git log ${from}..HEAD --format="%H [%cn] %s"`).toString('utf-8');
+  const output = child.execSync(`git log ${from}..${to} --format="%H [%cn] %s"`).toString('utf-8');
   const commits: ICommit[] = output.split('\n')
     .map((raw) => {
       const commit: ICommit = { author: '', sha: '', type: '', message: '', context: '' };
@@ -57,8 +62,7 @@ function run() {
     groups[commit.type][commit.context].push(commit);
   });
 
-  let changelog = `# Version ${version} (${
-    new Date().toISOString().split('T')[0]
+  let changelog = `# Version ${version} (${new Date().toISOString().split('T')[0]
     })\n\n`;
 
   _.forEach(CommitTypes, (type: ICommitType) => {
@@ -79,7 +83,7 @@ function run() {
   if (!fs.existsSync(changeLogsPath)) {
     fs.mkdirSync(changeLogsPath);
   }
-  fs.writeFileSync(`${changeLogsPath}/${version}.md`, changelog);
+  fs.writeFileSync(`${changeLogsPath}/${program.out || version}.md`, changelog);
   console.log(`Finished Creating Changelog ${version}`);
 }
 
