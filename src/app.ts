@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as _ from 'lodash';
 import * as program from 'commander';
 import { CommitTypes, ICommitType } from './types';
-//this pretty cool. Just one more thing.
+
 program.option('-f, --from <tag>', 'From tag');
 program.option('-t, --to <tag>', 'To tag');
 program.option('-o, --out <fileName>', 'Filename to output changelog to');
@@ -88,7 +88,9 @@ function run() {
 }
 
 function formatCommit(commit: ICommit) {
-  return `${commit.message} [[${commit.author}](https://github.com/NextCenturyMeters/ncss-cloud/commit/${commit.sha})]`;
+  let remoteURL = child.execSync('git config --get remote.origin.url').toString('utf-8');
+  remoteURL = remoteURL.replace('.git', '');
+  return `${commit.message} [[${commit.author}](${remoteURL}/commit/${commit.sha})]`;
 }
 
 // Run this thang!
