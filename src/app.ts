@@ -88,7 +88,9 @@ function run() {
 }
 
 function formatCommit(commit: ICommit) {
-  return `${commit.message} [[${commit.author}](https://github.com/NextCenturyMeters/ncss-cloud/commit/${commit.sha})]`;
+  let remoteURL = child.execSync('git config --get remote.origin.url').toString('utf-8');
+  remoteURL = remoteURL.replace('.git', '');
+  return `${commit.message} [[${commit.author}](${remoteURL}/commit/${commit.sha})]`;
 }
 
 // Run this thang!
