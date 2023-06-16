@@ -90,7 +90,6 @@ function run() {
 function formatCommit(commit: ICommit) {
   let remoteURL = child.execSync('git config --get remote.origin.url').toString('utf-8');
   remoteURL = remoteURL.replace('.git', '');
-  console.log(remoteURL , "remoteURL!!!!!!!!!");
   return `${commit.message} [[${commit.author}](${remoteURL}/commit/${commit.sha})]`;
 }
 
