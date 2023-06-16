@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as _ from 'lodash';
 import * as program from 'commander';
 import { CommitTypes, ICommitType } from './types';
-
+//this pretty cool. Just one more thing.
 program.option('-f, --from <tag>', 'From tag');
 program.option('-t, --to <tag>', 'To tag');
 program.option('-o, --out <fileName>', 'Filename to output changelog to');
